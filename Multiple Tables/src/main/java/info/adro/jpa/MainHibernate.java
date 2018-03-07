@@ -1,0 +1,43 @@
+package info.adro.jpa;
+
+
+import java.math.BigDecimal;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import info.adro.jpa.domain.Address;
+import info.adro.jpa.domain.Employee;
+
+
+
+/**
+ * Hello world!
+ *
+ */
+public class MainHibernate 
+{
+    public static void main( String[] args )
+    {
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		
+		Employee employee = new Employee();
+		Address address = new Address();
+		employee.setFirstName("Jan");
+		employee.setLastName("Nowak");
+		employee.setSalary(3333.3);
+		address.setLocality("warszawa");
+		address.setStreet("woronicza");
+		address.setStreetNumber(12);
+		address.setZipCode("43-332");
+		employee.setData(address);
+
+		entityManager.getTransaction().begin();
+		entityManager.persist(employee);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		entityManagerFactory.close();
+    }
+}
